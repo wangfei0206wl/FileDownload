@@ -14,6 +14,11 @@
 		7B1DDC242547F8C10019F04C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B1DDC232547F8C10019F04C /* Assets.xcassets */; };
 		7B1DDC272547F8C10019F04C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B1DDC252547F8C10019F04C /* LaunchScreen.storyboard */; };
 		7B1DDC2A2547F8C10019F04C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC292547F8C10019F04C /* main.m */; };
+		7B1DDC3B2547FCBB0019F04C /* XPFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC342547FCBB0019F04C /* XPFileDownloadManager.m */; };
+		7B1DDC3C2547FCBB0019F04C /* XPFileDownloadQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC352547FCBB0019F04C /* XPFileDownloadQueue.m */; };
+		7B1DDC3D2547FCBB0019F04C /* XPFileDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC362547FCBB0019F04C /* XPFileDownloadModel.m */; };
+		7B1DDC422547FD140019F04C /* XPUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC412547FD140019F04C /* XPUtility.m */; };
+		7B1DDC4A2547FF190019F04C /* NSString+Extends.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC492547FF190019F04C /* NSString+Extends.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +34,20 @@
 		7B1DDC262547F8C10019F04C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B1DDC282547F8C10019F04C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B1DDC292547F8C10019F04C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7B1DDC342547FCBB0019F04C /* XPFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPFileDownloadManager.m; sourceTree = "<group>"; };
+		7B1DDC352547FCBB0019F04C /* XPFileDownloadQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPFileDownloadQueue.m; sourceTree = "<group>"; };
+		7B1DDC362547FCBB0019F04C /* XPFileDownloadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPFileDownloadModel.m; sourceTree = "<group>"; };
+		7B1DDC372547FCBB0019F04C /* XPFileDownloadQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPFileDownloadQueue.h; sourceTree = "<group>"; };
+		7B1DDC382547FCBB0019F04C /* XPFileDownloadHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPFileDownloadHeader.h; sourceTree = "<group>"; };
+		7B1DDC392547FCBB0019F04C /* XPFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPFileDownloadManager.h; sourceTree = "<group>"; };
+		7B1DDC3A2547FCBB0019F04C /* XPFileDownloadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPFileDownloadModel.h; sourceTree = "<group>"; };
+		7B1DDC402547FD140019F04C /* XPUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPUtility.h; sourceTree = "<group>"; };
+		7B1DDC412547FD140019F04C /* XPUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPUtility.m; sourceTree = "<group>"; };
+		7B1DDC442547FD300019F04C /* XPGlobalMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPGlobalMacro.h; sourceTree = "<group>"; };
+		7B1DDC462547FE7A0019F04C /* FileDownload-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FileDownload-Prefix.pch"; sourceTree = "<group>"; };
+		7B1DDC482547FF190019F04C /* NSString+Extends.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extends.h"; sourceTree = "<group>"; };
+		7B1DDC492547FF190019F04C /* NSString+Extends.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extends.m"; sourceTree = "<group>"; };
+		7B1DDC50254801490019F04C /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +80,9 @@
 		7B1DDC162547F8BE0019F04C /* FileDownload */ = {
 			isa = PBXGroup;
 			children = (
+				7B1DDC472547FEF90019F04C /* Category */,
+				7B1DDC3F2547FD040019F04C /* Base */,
+				7B1DDC332547FCBB0019F04C /* Class */,
 				7B1DDC172547F8BE0019F04C /* AppDelegate.h */,
 				7B1DDC182547F8BE0019F04C /* AppDelegate.m */,
 				7B1DDC1A2547F8BF0019F04C /* SceneDelegate.h */,
@@ -72,8 +94,43 @@
 				7B1DDC252547F8C10019F04C /* LaunchScreen.storyboard */,
 				7B1DDC282547F8C10019F04C /* Info.plist */,
 				7B1DDC292547F8C10019F04C /* main.m */,
+				7B1DDC462547FE7A0019F04C /* FileDownload-Prefix.pch */,
 			);
 			path = FileDownload;
+			sourceTree = "<group>";
+		};
+		7B1DDC332547FCBB0019F04C /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				7B1DDC382547FCBB0019F04C /* XPFileDownloadHeader.h */,
+				7B1DDC392547FCBB0019F04C /* XPFileDownloadManager.h */,
+				7B1DDC342547FCBB0019F04C /* XPFileDownloadManager.m */,
+				7B1DDC3A2547FCBB0019F04C /* XPFileDownloadModel.h */,
+				7B1DDC362547FCBB0019F04C /* XPFileDownloadModel.m */,
+				7B1DDC372547FCBB0019F04C /* XPFileDownloadQueue.h */,
+				7B1DDC352547FCBB0019F04C /* XPFileDownloadQueue.m */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		7B1DDC3F2547FD040019F04C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				7B1DDC402547FD140019F04C /* XPUtility.h */,
+				7B1DDC412547FD140019F04C /* XPUtility.m */,
+				7B1DDC442547FD300019F04C /* XPGlobalMacro.h */,
+				7B1DDC50254801490019F04C /* SynthesizeSingleton.h */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		7B1DDC472547FEF90019F04C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				7B1DDC482547FF190019F04C /* NSString+Extends.h */,
+				7B1DDC492547FF190019F04C /* NSString+Extends.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,10 +202,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1DDC4A2547FF190019F04C /* NSString+Extends.m in Sources */,
 				7B1DDC1F2547F8BF0019F04C /* ViewController.m in Sources */,
 				7B1DDC192547F8BE0019F04C /* AppDelegate.m in Sources */,
+				7B1DDC422547FD140019F04C /* XPUtility.m in Sources */,
 				7B1DDC2A2547F8C10019F04C /* main.m in Sources */,
 				7B1DDC1C2547F8BF0019F04C /* SceneDelegate.m in Sources */,
+				7B1DDC3B2547FCBB0019F04C /* XPFileDownloadManager.m in Sources */,
+				7B1DDC3C2547FCBB0019F04C /* XPFileDownloadQueue.m in Sources */,
+				7B1DDC3D2547FCBB0019F04C /* XPFileDownloadModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +356,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = JDKH36YQ54;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FileDownload/FileDownload-Prefix.pch";
 				INFOPLIST_FILE = FileDownload/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -314,6 +378,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = JDKH36YQ54;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FileDownload/FileDownload-Prefix.pch";
 				INFOPLIST_FILE = FileDownload/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
