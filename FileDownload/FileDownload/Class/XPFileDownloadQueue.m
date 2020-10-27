@@ -108,6 +108,15 @@
     return model;
 }
 
+- (void)removeAllFileCaches {
+    @synchronized (self) {
+        [XPUtility removeAllFilesInFolder:kFileDownloadTmpFolder];
+        
+        [self.dicDownloads removeAllObjects];
+        [self saveDownloadCache];
+    }
+}
+
 #pragma mark - private
 
 - (void)initDownloadCache {

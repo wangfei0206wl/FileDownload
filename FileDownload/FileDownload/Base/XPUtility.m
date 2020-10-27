@@ -14,4 +14,13 @@
     return [paths lastObject];
 }
 
++ (void)removeAllFilesInFolder:(NSString *)directory {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:directory error:nil];
+    
+    for (NSString *fileName in contents) {
+        [fileManager removeItemAtPath:[directory stringByAppendingPathComponent:fileName] error:nil];
+    }
+}
+
 @end

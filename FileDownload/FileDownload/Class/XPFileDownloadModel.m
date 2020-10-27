@@ -51,6 +51,17 @@
     return arrCaches;
 }
 
+- (void)removeFile {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileManager fileExistsAtPath:self.filePath]) {
+        [fileManager removeItemAtPath:self.filePath error:nil];
+    }
+    if ([fileManager fileExistsAtPath:self.destFilePath]) {
+        [fileManager removeItemAtPath:self.destFilePath error:nil];
+    }
+}
+
 #pragma mark - private
 
 - (long long)getCacheFileSize {

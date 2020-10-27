@@ -58,6 +58,10 @@ DEFINE_SINGLETON_FOR_CLASS(XPFileDownloadManager)
     return [self.downloadQueue isExistDownloadFileCache:url];
 }
 
+- (void)removeAllFileCaches {
+    [self.downloadQueue removeAllFileCaches];
+}
+
 #pragma mark - NSURLSessionDelegate
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {

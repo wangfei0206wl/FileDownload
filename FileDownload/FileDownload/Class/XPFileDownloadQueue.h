@@ -22,6 +22,12 @@
  */
 - (XPFileDownloadModel *)addFileDownloadWithUrl:(NSString *)url;
 
+/**
+ 根据task得到文件下载model
+
+ @param task 文件下载task
+ @return 下载对象模型
+ */
 - (XPFileDownloadModel *)fileDownloadWithTask:(NSURLSessionTask *)task;
 
 /**
@@ -53,5 +59,10 @@
  @return YES: 有下载缓存文件; NO: 没有下载缓存文件
  */
 - (XPFileDownloadModel *)isExistDownloadFileCache:(NSString *)url;
+
+/**
+ 清空所有下载文件及缓存文件
+ */
+- (void)removeAllFileCaches;
 
 @end

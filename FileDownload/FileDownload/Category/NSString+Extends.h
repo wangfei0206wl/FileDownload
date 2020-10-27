@@ -9,6 +9,7 @@
 
 @interface NSString (Extends)
 
+/// 字符串md5加密
 - (NSString *)md5;
 
 @end

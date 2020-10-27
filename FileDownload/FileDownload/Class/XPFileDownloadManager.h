@@ -10,6 +10,22 @@
 #import "XPFileDownloadModel.h"
 
 /**
+ XPFileDownloadManager使用方法
+ 1、使用下载前，需要调用initForAppRun方法完成历史下载文件的初始化工作
+ 2、下载http文件时，调用downloadFileWithUrl:destFilePath:progress:finish:方法
+ 例如:
+ appDelegate.m中
+    ... ...
+    [[XPFileDownloadManager shared] initForAppRun];
+    ... ...
+ 下载文件时
+    ... ...
+    [XPFileDownloadManager shared] downloadFileWithUrl:url destFilePath:filePath progress:nil finish:nil];
+    ... ...
+ 其他方法
+ */
+
+/**
  文件下载管理类(支持断点续传、下载优先级)
  */
 @interface XPFileDownloadManager : NSObject
@@ -63,5 +79,10 @@ DEFINE_SINGLETON_FOR_HEADER(XPFileDownloadManager)
  @return YES: 有下载缓存文件; NO: 没有下载缓存文件
  */
 - (XPFileDownloadModel *)isExistDownloadFileCache:(NSString *)url;
+
+/**
+ 清空所有下载文件及缓存文件
+ */
+- (void)removeAllFileCaches;
 
 @end

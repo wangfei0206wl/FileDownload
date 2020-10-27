@@ -13,4 +13,8 @@
 /// 文档目录
 + (NSString *)documentPath;
 
+/// 删除指定目录下所有文件
+/// @param directory 指定目录
++ (void)removeAllFilesInFolder:(NSString *)directory;
+
 @end

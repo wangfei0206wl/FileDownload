@@ -67,4 +67,9 @@
  */
 + (NSArray *)localCacheWithModels:(NSDictionary *)dicModels;
 
+/**
+ 删除文件缓存及目标文件
+ */
+- (void)removeFile;
+
 @end
