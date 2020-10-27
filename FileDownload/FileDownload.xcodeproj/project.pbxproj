@@ -31,6 +31,7 @@
 		7B1DDC79254807DC0019F04C /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC6F254807DC0019F04C /* MASViewConstraint.m */; };
 		7B1DDC7A254807DC0019F04C /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC70254807DC0019F04C /* MASViewAttribute.m */; };
 		7B1DDC7F25480B350019F04C /* FileUploadVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC7E25480B350019F04C /* FileUploadVC.m */; };
+		7B1DDC83254829460019F04C /* XPFileTotalSizeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B1DDC82254829460019F04C /* XPFileTotalSizeHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,8 @@
 		7B1DDC70254807DC0019F04C /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
 		7B1DDC7D25480B350019F04C /* FileUploadVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileUploadVC.h; sourceTree = "<group>"; };
 		7B1DDC7E25480B350019F04C /* FileUploadVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileUploadVC.m; sourceTree = "<group>"; };
+		7B1DDC81254829460019F04C /* XPFileTotalSizeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XPFileTotalSizeHelper.h; sourceTree = "<group>"; };
+		7B1DDC82254829460019F04C /* XPFileTotalSizeHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XPFileTotalSizeHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +154,8 @@
 				7B1DDC382547FCBB0019F04C /* XPFileDownloadHeader.h */,
 				7B1DDC392547FCBB0019F04C /* XPFileDownloadManager.h */,
 				7B1DDC342547FCBB0019F04C /* XPFileDownloadManager.m */,
+				7B1DDC81254829460019F04C /* XPFileTotalSizeHelper.h */,
+				7B1DDC82254829460019F04C /* XPFileTotalSizeHelper.m */,
 				7B1DDC3A2547FCBB0019F04C /* XPFileDownloadModel.h */,
 				7B1DDC362547FCBB0019F04C /* XPFileDownloadModel.m */,
 				7B1DDC372547FCBB0019F04C /* XPFileDownloadQueue.h */,
@@ -295,6 +300,7 @@
 				7B1DDC72254807DC0019F04C /* ViewController+MASAdditions.m in Sources */,
 				7B1DDC7A254807DC0019F04C /* MASViewAttribute.m in Sources */,
 				7B1DDC1F2547F8BF0019F04C /* ViewController.m in Sources */,
+				7B1DDC83254829460019F04C /* XPFileTotalSizeHelper.m in Sources */,
 				7B1DDC73254807DC0019F04C /* MASCompositeConstraint.m in Sources */,
 				7B1DDC77254807DC0019F04C /* View+MASAdditions.m in Sources */,
 				7B1DDC542548079A0019F04C /* FileDownloadVC.m in Sources */,

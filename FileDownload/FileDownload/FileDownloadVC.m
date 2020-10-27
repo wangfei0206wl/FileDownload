@@ -6,6 +6,7 @@
 //
 
 #import "FileDownloadVC.h"
+#import "XPFileTotalSizeHelper.h"
 #import "XPFileDownloadManager.h"
 
 @interface FileDownloadVC ()
@@ -31,6 +32,7 @@
     self.downloadInfos = [self downloadFiles];
     
     [self createViews];
+    [self asyncFileSize];
 }
 
 #pragma mark - action
@@ -78,6 +80,23 @@
         @{@"name": @"微信windows版", @"url": @"https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe"},
         @{@"name": @"文件下载上传", @"url": @"https://github.com/wangfei0206wl/FileDownload/archive/main.zip"},
     ];
+}
+
+- (void)asyncFileSize {
+    for (int index = 0; index < self.downloadInfos.count; index++) {
+        NSDictionary *dicInfo = self.downloadInfos[index];
+        __weak typeof(self) weakSelf = self;
+        [[XPFileTotalSizeHelper alloc] asyncFileSizeWithUrl:dicInfo[@"url"] finish:^(long long totalSize, BOOL bSuccess) {
+            [weakSelf handleAsyncFileSizeFinish:totalSize url:dicInfo[@"url"] index:index];
+        }];
+    }
+}
+
+- (void)handleAsyncFileSizeFinish:(long long)totalSize url:(NSString *)url index:(int)index {
+    XPFileDownloadModel *model = [[XPFileDownloadManager shared] isExistDownloadFileCache:url];
+    model.totalFileSize = totalSize;
+    
+    [self handleDownloadProgress:model.cacheFileSize totalFileSize:model.totalFileSize index:index];
 }
 
 - (void)createViews {
@@ -196,13 +215,13 @@
 }
 
 - (void)handleDownloadProgress:(long long)cacheFileSize totalFileSize:(long long)totalFileSize index:(int)index {
-    if (index >= 0 && index < self.progressViews.count && index < self.progressLabels.count) {
+    if (index >= 0 && index < self.progressViews.count && index < self.progressLabels.count && totalFileSize > 0) {
         CGFloat progress = cacheFileSize * 1.0 / totalFileSize;
         UIProgressView *progressView = self.progressViews[index];
         UILabel *progressLabel = self.progressLabels[index];
         
         progressView.progress = progress;
-        progressLabel.text = [NSString stringWithFormat:@"%2d%%", (int)(progress * 100)];
+        progressLabel.text = [NSString stringWithFormat:@"%2d%% ( %@/%@ )", (int)(progress * 100), [self fileSizeString:cacheFileSize], [self fileSizeString:totalFileSize]];
     }
 }
 
@@ -214,6 +233,25 @@
         progressView.progress = 1.0;
         progressLabel.text = @"下载完成";
     }
+}
+
+- (NSString *)fileSizeString:(long long)fileSize {
+    NSString *string = nil;
+    
+    if (fileSize > 1024 * 1024 * 1024) {
+        CGFloat size = fileSize * 1.0 / (1024 * 1024 * 1024);
+        string = [NSString stringWithFormat:@"%.2fG", size];
+    } else if (fileSize > 1024 * 1024) {
+        CGFloat size = fileSize * 1.0 / (1024 * 1024);
+        string = [NSString stringWithFormat:@"%.2fM", size];
+    } else if (fileSize > 1024) {
+        CGFloat size = fileSize * 1.0 / 1024;
+        string = [NSString stringWithFormat:@"%.2fK", size];
+    } else {
+        string = [NSString stringWithFormat:@"%lldByte", fileSize];
+    }
+    
+    return string;
 }
 
 @end
