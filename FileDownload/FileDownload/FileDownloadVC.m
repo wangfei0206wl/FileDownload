@@ -15,8 +15,10 @@
 @property (nonatomic, strong) UIButton *btnStopAll;
 @property (nonatomic, strong) NSMutableArray *progressViews;
 @property (nonatomic, strong) NSMutableArray *progressLabels;
+@property (nonatomic, strong) NSMutableArray *downloadButtons;
 
 @property (nonatomic, strong) NSArray *downloadInfos;
+@property (nonatomic, strong) NSMutableDictionary *dicFileTotalSize;
 
 @end
 
@@ -29,7 +31,9 @@
     self.title = @"下载测试";
     self.progressViews = [NSMutableArray array];
     self.progressLabels = [NSMutableArray array];
+    self.downloadButtons = [NSMutableArray array];
     self.downloadInfos = [self downloadFiles];
+    self.dicFileTotalSize = [NSMutableDictionary dictionary];
     
     [self createViews];
     [self asyncFileSize];
@@ -38,11 +42,41 @@
 #pragma mark - action
 
 - (void)onClickStartAll:(id)sender {
-    
+    for (int index = 0; index < self.downloadInfos.count; index++) {
+        NSDictionary *dicInfo = self.downloadInfos[index];
+        NSString *url = dicInfo[@"url"];
+        XPFileDownloadModel *model = [[XPFileDownloadManager shared] isExistDownloadFileCache:url];
+        long long totalSize = [self.dicFileTotalSize[[NSString stringWithFormat:@"%d", index]] longLongValue];
+        
+        if (model.cacheFileSize < totalSize && !model.bDownloading) {
+            UIButton *button = self.downloadButtons[index];
+            [button setTitle:@"停止" forState:UIControlStateNormal];
+            
+            __weak typeof(self) weakSelf = self;
+            [[XPFileDownloadManager shared] downloadFileWithUrl:url destFilePath:nil progress:^(long long cacheFileSize, long long totalFileSize) {
+                [weakSelf handleDownloadProgress:cacheFileSize totalFileSize:totalFileSize index:index];
+            } finish:^(NSError *error, NSString *filePath) {
+                [weakSelf handleDownloadFinish:error filePath:filePath index:index];
+            }];
+        }
+    }
 }
 
 - (void)onClickStopAll:(id)sender {
-    
+    for (int index = 0; index < self.downloadInfos.count; index++) {
+        NSDictionary *dicInfo = self.downloadInfos[index];
+        NSString *url = dicInfo[@"url"];
+        XPFileDownloadModel *model = [[XPFileDownloadManager shared] isExistDownloadFileCache:url];
+        long long totalSize = [self.dicFileTotalSize[[NSString stringWithFormat:@"%d", index]] longLongValue];
+        
+        if (model.cacheFileSize < totalSize && model.bDownloading) {
+            // 未下载完，且处于下载中的
+            UIButton *button = self.downloadButtons[index];
+            [button setTitle:@"继续" forState:UIControlStateNormal];
+            
+            [[XPFileDownloadManager shared] cancelDownloadWithUrl:url];
+        }
+    }
 }
 
 - (void)onClickItem:(id)sender {
@@ -53,21 +87,23 @@
         NSDictionary *dicInfo = self.downloadInfos[index];
         NSString *url = dicInfo[@"url"];
         XPFileDownloadModel *model = [[XPFileDownloadManager shared] isExistDownloadFileCache:url];
+        long long totalSize = [self.dicFileTotalSize[[NSString stringWithFormat:@"%d", index]] longLongValue];
         
-        button.selected = !model.bDownloading;
-        
-        if (model.bDownloading) {
-            // 下载中，则停止下载
-            [[XPFileDownloadManager shared] cancelDownloadWithUrl:url];
-        } else {
-            // 开始下载
-            __weak typeof(self) weakSelf = self;
-            [[XPFileDownloadManager shared] downloadFileWithUrl:url destFilePath:nil progress:^(long long cacheFileSize, long long totalFileSize) {
-                [weakSelf handleDownloadProgress:cacheFileSize totalFileSize:totalFileSize index:index];
-            } finish:^(NSError *error, NSString *filePath) {
-                button.selected = NO;
-                [weakSelf handleDownloadFinish:error filePath:filePath index:index];
-            }];
+        if (model.cacheFileSize < totalSize) {
+            if (model.bDownloading) {
+                // 下载中，则停止下载
+                [button setTitle:@"继续" forState:UIControlStateNormal];
+                [[XPFileDownloadManager shared] cancelDownloadWithUrl:url];
+            } else {
+                // 开始下载
+                [button setTitle:@"停止" forState:UIControlStateNormal];
+                __weak typeof(self) weakSelf = self;
+                [[XPFileDownloadManager shared] downloadFileWithUrl:url destFilePath:nil progress:^(long long cacheFileSize, long long totalFileSize) {
+                    [weakSelf handleDownloadProgress:cacheFileSize totalFileSize:totalFileSize index:index];
+                } finish:^(NSError *error, NSString *filePath) {
+                    [weakSelf handleDownloadFinish:error filePath:filePath index:index];
+                }];
+            }
         }
     }
 }
@@ -78,7 +114,8 @@
     return @[
         @{@"name": @"微信mac版", @"url": @"https://dldir1.qq.com/weixin/mac/WeChatMac.dmg"},
         @{@"name": @"微信windows版", @"url": @"https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe"},
-        @{@"name": @"文件下载上传", @"url": @"https://github.com/wangfei0206wl/FileDownload/archive/main.zip"},
+//        @{@"name": @"文件下载上传", @"url": @"https://github.com/wangfei0206wl/FileDownload/archive/main.zip"},
+        @{@"name": @"Android Studio", @"url": @"https://dl.google.com/dl/android/studio/install/3.5.2.0/android-studio-ide-191.5977832-windows.exe"},
     ];
 }
 
@@ -95,8 +132,9 @@
 - (void)handleAsyncFileSizeFinish:(long long)totalSize url:(NSString *)url index:(int)index {
     XPFileDownloadModel *model = [[XPFileDownloadManager shared] isExistDownloadFileCache:url];
     model.totalFileSize = totalSize;
-    
+    [self.dicFileTotalSize setValue:@(totalSize) forKey:[NSString stringWithFormat:@"%d", index]];
     [self handleDownloadProgress:model.cacheFileSize totalFileSize:model.totalFileSize index:index];
+    NSLog(@"-----------handleAsyncFileSizeFinish url: %@, totalSize: %lld", url, totalSize);
 }
 
 - (void)createViews {
@@ -161,9 +199,9 @@
     
     // 按钮
     UIButton *button = [self buttonWithTitle:(model.cacheFileSize > 0)?@"继续":@"下载" color:nil font:nil action:@selector(onClickItem:)];
-    [button setTitle:@"暂停" forState:UIControlStateSelected];
     button.tag = (2000 + index);
     [view addSubview:button];
+    [self.downloadButtons addObject:button];
     
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(view);
@@ -219,9 +257,15 @@
         CGFloat progress = cacheFileSize * 1.0 / totalFileSize;
         UIProgressView *progressView = self.progressViews[index];
         UILabel *progressLabel = self.progressLabels[index];
+        UIButton *button = self.downloadButtons[index];
         
         progressView.progress = progress;
-        progressLabel.text = [NSString stringWithFormat:@"%2d%% ( %@/%@ )", (int)(progress * 100), [self fileSizeString:cacheFileSize], [self fileSizeString:totalFileSize]];
+        if (progress < 1.0) {
+            progressLabel.text = [NSString stringWithFormat:@"%2d%% ( %@/%@ )", (int)(progress * 100), [self fileSizeString:cacheFileSize], [self fileSizeString:totalFileSize]];
+        } else {
+            progressLabel.text = @"下载完成";
+            [button setTitle:@"下载完成" forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -229,9 +273,11 @@
     if (!error && index >= 0 && index < self.progressViews.count && index < self.progressLabels.count) {
         UIProgressView *progressView = self.progressViews[index];
         UILabel *progressLabel = self.progressLabels[index];
+        UIButton *button = self.downloadButtons[index];
         
         progressView.progress = 1.0;
         progressLabel.text = @"下载完成";
+        [button setTitle:@"下载完成" forState:UIControlStateNormal];
     }
 }
 
